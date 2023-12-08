@@ -12,6 +12,22 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          clean: false
+
+      - name: Install Dependencies
+        run: npm ci
 
       - name: Run a one-line script
         run: echo "Hello, World!"
+
+      - name: Change Build Directory
+        run: |
+          TARGET_DIR='.next_real'
+          
+          if [ -d $TARGET_DIR ]
+          then
+            rm -rf $TARGET_DIR
+          fi
+          
+          mv .next $TARGET_DIR
